@@ -84,7 +84,7 @@ services:
     volumes:
       - anythingllm_storage:/anythingllm/storage
     env_file:
-      - ../anything-llm/.env
+      - ./anything-llm/.env
     depends_on:
       - qdrant
 
@@ -97,7 +97,7 @@ services:
     volumes:
       - ag_studio_storage:/ag_studio/storage
     env_file:
-      - ../autogen-studio/.env
+      - ./autogen-studio/.env
     networks: ['demo']
     depends_on:
       - qdrant
@@ -110,14 +110,14 @@ services:
     volumes:
       - jupyter_storage:/home/jovyan
     env_file:
-      - ../jupyter-notebook/.env
+      - ./jupyter-notebook/.env
     networks: ['demo']
     depends_on:
       - qdrant
 
   pipelines:
     build:
-      context: ../pipelines
+      context: ./pipelines
       dockerfile: Dockerfile
       args:
         MINIMUM_BUILD: "true"
