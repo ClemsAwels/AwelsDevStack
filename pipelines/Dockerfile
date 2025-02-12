@@ -16,15 +16,15 @@ ENV ENV=prod \
 # Install GCC and build tools. 
 # These are kept in the final image to enable installing packages on the fly.
 RUN apt-get update && \
-    apt-get install -y gcc build-essential curl git && \
+    apt-get install -y gcc build-essential curl git dos2unix && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
 # Install Python dependencies
-COPY ./requirements.txt .
-COPY ./requirements-minimum.txt .
+COPY ./requirements.txt ./
+COPY ./requirements-minimum.txt ./
 RUN pip3 install uv
 RUN if [ "$MINIMUM_BUILD" != "true" ]; then \
         if [ "$USE_CUDA_DOCKER" = "true" ]; then \
@@ -41,6 +41,9 @@ RUN if [ "$MINIMUM_BUILD" = "true" ]; then \
 
 # Copy the application code
 COPY . .
+
+# Convert line endings for all shell scripts
+RUN find . -type f -name "*.sh" -exec dos2unix {} +
 
 # Expose the port
 ENV HOST="0.0.0.0"
