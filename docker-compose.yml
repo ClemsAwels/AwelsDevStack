@@ -90,7 +90,9 @@ services:
       - qdrant
 
   ag_studio:
-    image: fbeawels/autogen-studio:0.4.2
+    build:
+      context: ./autogen-studio
+      dockerfile: Dockerfile
     hostname: ag_studio
     container_name: autogen-studio
     ports:
