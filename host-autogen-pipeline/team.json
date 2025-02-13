@@ -1,0 +1,464 @@
+{
+    "id": "gallery_1739442197851",
+    "name": "Developer Recruiters",
+    "url": null,
+    "metadata": {
+      "author": "Awels Engineering",
+      "version": "1.0.0",
+      "description": "A default gallery containing several teams and agents.",
+      "tags": [
+        "awels",
+        "assistant",
+        "dev agents"
+      ],
+      "license": "MIT",
+      "homepage": null,
+      "category": "flow",
+      "last_synced": null,
+      "created_at": "2025-02-13T10:23:17.851Z",
+      "updated_at": "2025-02-13T10:37:15.242Z"
+    },
+    "items": {
+      "teams": [
+        {
+          "provider": "autogen_agentchat.teams.RoundRobinGroupChat",
+          "component_type": "team",
+          "version": 1,
+          "component_version": 1,
+          "description": "A single recruitment team in a RoundRobinGroupChat team. ",
+          "label": "Dev Recruit Team_17394",
+          "config": {
+            "participants": [
+              {
+                "provider": "autogen_agentchat.agents.AssistantAgent",
+                "component_type": "agent",
+                "version": 1,
+                "component_version": 1,
+                "description": "The assistant in charge of planning the work to answer the business issue.",
+                "label": "AssistantAgent",
+                "config": {
+                  "name": "dev_planner",
+                  "model_client": {
+                    "provider": "autogen_ext.models.openai.OpenAIChatCompletionClient",
+                    "component_type": "model",
+                    "version": 1,
+                    "component_version": 1,
+                    "description": "Chat completion client for OpenAI hosted models.",
+                    "label": "OpenAIChatCompletionClient",
+                    "config": {
+                      "model": "gpt-4o-mini"
+                    }
+                  },
+                  "tools": [],
+                  "handoffs": [],
+                  "model_context": {
+                    "provider": "autogen_core.model_context.UnboundedChatCompletionContext",
+                    "component_type": "chat_completion_context",
+                    "version": 1,
+                    "component_version": 1,
+                    "description": "An unbounded chat completion context that keeps a view of the all the messages.",
+                    "label": "UnboundedChatCompletionContext",
+                    "config": {}
+                  },
+                  "description": "The assistant in charge of planning the work to answer the business issue.",
+                  "system_message": "You are the Planning Assistant, an AI designed to coordinate the preparation of technical assessments\nfor developer hiring. Your primary role is to plan and oversee the creation of a questionnaire for candidates\nwith 2 to 5 years of experience, focusing on intermediate-level skills.\nThe language and/or framework will be specified by the user.\n\nYour tasks include:\n1. Planning how to fulfill the request by leveraging three other agents: Dev_Creator, Dev_Writer, and Dev_Assessor.\n2. Instructing the Dev_Creator on which technical domains should be assessed based on the specified language/framework.\nReceive a list of 10 technical topics. \n3. Requesting the Dev_Writer to prepare 5 questions per topic, each with multiple choices \nand one correct answer. Collect the questions, choices, and answers.\n4. Sending the questions and choices to the Dev_Assessor (excluding answers) to verify the correctness.\nCompare the answers provided by the Dev_Writer and Dev_Assessor. If discrepancies occur, seek clarification\nfrom the Dev_Assessor.\n5. Finalizing the questionnaire by compiling all questions, choices, and verified answers\ninto a well-formatted Markdown file named 'questionnaire.md'. Make sure you also write the answers !\n\nEnsure the outcome is a comprehensive and neatly formatted document ready for candidate assessment.\nOnce everything has been completed and the file created, you shutdown the swarm and write TERMINATE.\n",
+                  "model_client_stream": false,
+                  "reflect_on_tool_use": false,
+                  "tool_call_summary_format": "{result}"
+                }
+              },
+              {
+                "provider": "autogen_agentchat.agents.AssistantAgent",
+                "component_type": "agent",
+                "version": 1,
+                "component_version": 1,
+                "description": "The assistant in charge of identifying the technical domains to be assessed.",
+                "label": "AssistantAgent",
+                "config": {
+                  "name": "dev_creator",
+                  "model_client": {
+                    "provider": "autogen_ext.models.openai.OpenAIChatCompletionClient",
+                    "component_type": "model",
+                    "version": 1,
+                    "component_version": 1,
+                    "description": "Chat completion client for OpenAI hosted models.",
+                    "label": "OpenAIChatCompletionClient",
+                    "config": {
+                      "model": "gpt-4o-mini"
+                    }
+                  },
+                  "tools": [],
+                  "handoffs": [],
+                  "model_context": {
+                    "provider": "autogen_core.model_context.UnboundedChatCompletionContext",
+                    "component_type": "chat_completion_context",
+                    "version": 1,
+                    "component_version": 1,
+                    "description": "An unbounded chat completion context that keeps a view of the all the messages.",
+                    "label": "UnboundedChatCompletionContext",
+                    "config": {}
+                  },
+                  "description": "The assistant in charge of identifying the technical domains to be assessed.",
+                  "system_message": "You are the Dev_Creator, an AI responsible for identifying the technical domains to be assessed in a developer hiring process. Your role is to determine the key areas of knowledge and skills relevant to the specified programming language and/or framework. Upon receiving a task from the Planning Assistant, you will: 1. Analyze the given language/framework to identify essential technical domains. 2. Provide a list of 10 technical topics that should be assessed to evaluate candidates' proficiency. Your output will guide the Dev_Writer in creating relevant and targeted questions for the assessment.",
+                  "model_client_stream": false,
+                  "reflect_on_tool_use": false,
+                  "tool_call_summary_format": "{result}"
+                }
+              },
+              {
+                "provider": "autogen_agentchat.agents.AssistantAgent",
+                "component_type": "agent",
+                "version": 1,
+                "component_version": 1,
+                "description": "The assistant in charge of writing the questions, the choices as well as providing the results.",
+                "label": "AssistantAgent",
+                "config": {
+                  "name": "dev_writer",
+                  "model_client": {
+                    "provider": "autogen_ext.models.openai.OpenAIChatCompletionClient",
+                    "component_type": "model",
+                    "version": 1,
+                    "component_version": 1,
+                    "description": "Chat completion client for OpenAI hosted models.",
+                    "label": "OpenAIChatCompletionClient",
+                    "config": {
+                      "model": "gpt-4o-mini"
+                    }
+                  },
+                  "tools": [],
+                  "handoffs": [],
+                  "model_context": {
+                    "provider": "autogen_core.model_context.UnboundedChatCompletionContext",
+                    "component_type": "chat_completion_context",
+                    "version": 1,
+                    "component_version": 1,
+                    "description": "An unbounded chat completion context that keeps a view of the all the messages.",
+                    "label": "UnboundedChatCompletionContext",
+                    "config": {}
+                  },
+                  "description": "The assistant in charge of writing the questions, the choices as well as providing the results.",
+                  "system_message": "You are the Dev_Writer, an AI tasked with creating assessment questions for a developer hiring process. Your role is to generate questions that effectively evaluate candidates' knowledge and skills in the specified technical domains. Upon receiving a list of topics from the Planning Assistant, you will: 1. Prepare 5 questions per topic, ensuring each question includes multiple choices         and one correct answer. 2. Provide the questions, choices, and correct answers to the Planning Assistant. Your questions should be clear, challenging, and aligned with the intermediate-level skills expected from candidates with 2 to 5 years of experience.",
+                  "model_client_stream": false,
+                  "reflect_on_tool_use": false,
+                  "tool_call_summary_format": "{result}"
+                }
+              },
+              {
+                "provider": "autogen_agentchat.agents.AssistantAgent",
+                "component_type": "agent",
+                "version": 1,
+                "component_version": 1,
+                "description": "The assistant in charge of assessing the questions, the choices as well as assessing the results.",
+                "label": "AssistantAgent",
+                "config": {
+                  "name": "dev_assessor",
+                  "model_client": {
+                    "provider": "autogen_ext.models.openai.OpenAIChatCompletionClient",
+                    "component_type": "model",
+                    "version": 1,
+                    "component_version": 1,
+                    "description": "Chat completion client for OpenAI hosted models.",
+                    "label": "OpenAIChatCompletionClient",
+                    "config": {
+                      "model": "gpt-4o-mini"
+                    }
+                  },
+                  "tools": [
+                    {
+                      "provider": "autogen_core.tools.FunctionTool",
+                      "component_type": "tool",
+                      "version": 1,
+                      "component_version": 1,
+                      "description": "Writes the given markdown content to a specified file.\n\n    Parameters:\n    - markdown_content (str): The markdown content to write to the file.\n    - filename (str): The name of the file to write the content to.",
+                      "label": "FunctionTool",
+                      "config": {
+                        "source_code": "def write_markdown_to_file(markdown_content: str, filename: str) -> str:\n    try:\n        with open(filename, 'w', encoding='utf-8') as file:\n            file.write(markdown_content)\n        return(f\"Markdown content successfully written to {filename}\")\n    except Exception as e:\n        return(f\"An error occurred while writing to the file: {e}\")",
+                        "name": "write_markdown_to_file",
+                        "description": "Writes the given markdown content to a specified file.",
+                        "global_imports": [],
+                        "has_cancellation_support": false
+                      }
+                    }
+                  ],
+                  "handoffs": [],
+                  "model_context": {
+                    "provider": "autogen_core.model_context.UnboundedChatCompletionContext",
+                    "component_type": "chat_completion_context",
+                    "version": 1,
+                    "component_version": 1,
+                    "description": "An unbounded chat completion context that keeps a view of the all the messages.",
+                    "label": "UnboundedChatCompletionContext",
+                    "config": {}
+                  },
+                  "description": "The assistant in charge of assessing the questions, the choices as well as assessing the results.",
+                  "system_message": "You are the Dev_Assessor, an AI expert in evaluating and verifying the correctness of assessment questions. Your role is to ensure the accuracy of the answers provided for a developer hiring process. Upon receiving questions and choices from the Planning Assistant (excluding answers), you will: 1. Analyze each question and determine the correct answer based on your expertise. 2. Return the verified answers to the Planning Assistant. 3. If discrepancies are identified between your answers and those provided by the Dev_Writer, explain the reasoning behind your answer and provide the correct solution. Your expertise ensures the reliability and validity of the assessment questions used in the hiring process.",
+                  "model_client_stream": false,
+                  "reflect_on_tool_use": false,
+                  "tool_call_summary_format": "{result}"
+                }
+              }
+            ],
+            "termination_condition": {
+              "provider": "autogen_agentchat.base.OrTerminationCondition",
+              "component_type": "termination",
+              "version": 1,
+              "component_version": 1,
+              "label": "OrTerminationCondition",
+              "config": {
+                "conditions": [
+                  {
+                    "provider": "autogen_agentchat.conditions.TextMentionTermination",
+                    "component_type": "termination",
+                    "version": 1,
+                    "component_version": 1,
+                    "description": "Terminate the conversation if a specific text is mentioned.",
+                    "label": "TextMentionTermination",
+                    "config": {
+                      "text": "TERMINATE"
+                    }
+                  },
+                  {
+                    "provider": "autogen_agentchat.conditions.MaxMessageTermination",
+                    "component_type": "termination",
+                    "version": 1,
+                    "component_version": 1,
+                    "description": "Terminate the conversation after a maximum number of messages have been exchanged.",
+                    "label": "MaxMessageTermination",
+                    "config": {
+                      "max_messages": 10
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "components": {
+        "agents": [
+          {
+            "provider": "autogen_agentchat.agents.AssistantAgent",
+            "component_type": "agent",
+            "version": 1,
+            "component_version": 1,
+            "description": "The assistant in charge of planning the work to answer the business issue.",
+            "label": "AssistantAgent",
+            "config": {
+              "name": "dev_planner",
+              "model_client": {
+                "provider": "autogen_ext.models.openai.OpenAIChatCompletionClient",
+                "component_type": "model",
+                "version": 1,
+                "component_version": 1,
+                "description": "Chat completion client for OpenAI hosted models.",
+                "label": "OpenAIChatCompletionClient",
+                "config": {
+                  "model": "gpt-4o-mini"
+                }
+              },
+              "tools": [],
+              "handoffs": [],
+              "model_context": {
+                "provider": "autogen_core.model_context.UnboundedChatCompletionContext",
+                "component_type": "chat_completion_context",
+                "version": 1,
+                "component_version": 1,
+                "description": "An unbounded chat completion context that keeps a view of the all the messages.",
+                "label": "UnboundedChatCompletionContext",
+                "config": {}
+              },
+              "description": "The assistant in charge of planning the work to answer the business issue.",
+              "system_message": "You are the Planning Assistant, an AI designed to coordinate the preparation of technical assessments\nfor developer hiring. Your primary role is to plan and oversee the creation of a questionnaire for candidates\nwith 2 to 5 years of experience, focusing on intermediate-level skills.\nThe language and/or framework will be specified by the user.\n\nYour tasks include:\n1. Planning how to fulfill the request by leveraging three other agents: Dev_Creator, Dev_Writer, and Dev_Assessor.\n2. Instructing the Dev_Creator on which technical domains should be assessed based on the specified language/framework.\nReceive a list of 10 technical topics. \n3. Requesting the Dev_Writer to prepare 5 questions per topic, each with multiple choices \nand one correct answer. Collect the questions, choices, and answers.\n4. Sending the questions and choices to the Dev_Assessor (excluding answers) to verify the correctness.\nCompare the answers provided by the Dev_Writer and Dev_Assessor. If discrepancies occur, seek clarification\nfrom the Dev_Assessor.\n5. Finalizing the questionnaire by compiling all questions, choices, and verified answers\ninto a well-formatted Markdown file named 'questionnaire.md'. Make sure you also write the answers !\n\nEnsure the outcome is a comprehensive and neatly formatted document ready for candidate assessment.\nOnce everything has been completed and the file created, you shutdown the swarm and write TERMINATE.\n",
+              "model_client_stream": false,
+              "reflect_on_tool_use": false,
+              "tool_call_summary_format": "{result}"
+            }
+          },
+          {
+            "provider": "autogen_agentchat.agents.AssistantAgent",
+            "component_type": "agent",
+            "version": 1,
+            "component_version": 1,
+            "description": "The assistant in charge of identifying the technical domains to be assessed.",
+            "label": "AssistantAgent",
+            "config": {
+              "name": "dev_creator",
+              "model_client": {
+                "provider": "autogen_ext.models.openai.OpenAIChatCompletionClient",
+                "component_type": "model",
+                "version": 1,
+                "component_version": 1,
+                "description": "Chat completion client for OpenAI hosted models.",
+                "label": "OpenAIChatCompletionClient",
+                "config": {
+                  "model": "gpt-4o-mini"
+                }
+              },
+              "tools": [],
+              "handoffs": [],
+              "model_context": {
+                "provider": "autogen_core.model_context.UnboundedChatCompletionContext",
+                "component_type": "chat_completion_context",
+                "version": 1,
+                "component_version": 1,
+                "description": "An unbounded chat completion context that keeps a view of the all the messages.",
+                "label": "UnboundedChatCompletionContext",
+                "config": {}
+              },
+              "description": "The assistant in charge of identifying the technical domains to be assessed.",
+              "system_message": "You are the Dev_Creator, an AI responsible for identifying the technical domains to be assessed in a developer hiring process. Your role is to determine the key areas of knowledge and skills relevant to the specified programming language and/or framework. Upon receiving a task from the Planning Assistant, you will: 1. Analyze the given language/framework to identify essential technical domains. 2. Provide a list of 10 technical topics that should be assessed to evaluate candidates' proficiency. Your output will guide the Dev_Writer in creating relevant and targeted questions for the assessment.",
+              "model_client_stream": false,
+              "reflect_on_tool_use": false,
+              "tool_call_summary_format": "{result}"
+            }
+          },
+          {
+            "provider": "autogen_agentchat.agents.AssistantAgent",
+            "component_type": "agent",
+            "version": 1,
+            "component_version": 1,
+            "description": "The assistant in charge of writing the questions, the choices as well as providing the results.",
+            "label": "AssistantAgent",
+            "config": {
+              "name": "dev_writer",
+              "model_client": {
+                "provider": "autogen_ext.models.openai.OpenAIChatCompletionClient",
+                "component_type": "model",
+                "version": 1,
+                "component_version": 1,
+                "description": "Chat completion client for OpenAI hosted models.",
+                "label": "OpenAIChatCompletionClient",
+                "config": {
+                  "model": "gpt-4o-mini"
+                }
+              },
+              "tools": [],
+              "handoffs": [],
+              "model_context": {
+                "provider": "autogen_core.model_context.UnboundedChatCompletionContext",
+                "component_type": "chat_completion_context",
+                "version": 1,
+                "component_version": 1,
+                "description": "An unbounded chat completion context that keeps a view of the all the messages.",
+                "label": "UnboundedChatCompletionContext",
+                "config": {}
+              },
+              "description": "The assistant in charge of writing the questions, the choices as well as providing the results.",
+              "system_message": "You are the Dev_Writer, an AI tasked with creating assessment questions for a developer hiring process. Your role is to generate questions that effectively evaluate candidates' knowledge and skills in the specified technical domains. Upon receiving a list of topics from the Planning Assistant, you will: 1. Prepare 5 questions per topic, ensuring each question includes multiple choices         and one correct answer. 2. Provide the questions, choices, and correct answers to the Planning Assistant. Your questions should be clear, challenging, and aligned with the intermediate-level skills expected from candidates with 2 to 5 years of experience.",
+              "model_client_stream": false,
+              "reflect_on_tool_use": false,
+              "tool_call_summary_format": "{result}"
+            }
+          },
+          {
+            "provider": "autogen_agentchat.agents.AssistantAgent",
+            "component_type": "agent",
+            "version": 1,
+            "component_version": 1,
+            "description": "The assistant in charge of assessing the questions, the choices as well as assessing the results.",
+            "label": "AssistantAgent",
+            "config": {
+              "name": "dev_assessor",
+              "model_client": {
+                "provider": "autogen_ext.models.openai.OpenAIChatCompletionClient",
+                "component_type": "model",
+                "version": 1,
+                "component_version": 1,
+                "description": "Chat completion client for OpenAI hosted models.",
+                "label": "OpenAIChatCompletionClient",
+                "config": {
+                  "model": "gpt-4o-mini"
+                }
+              },
+              "tools": [
+                {
+                  "provider": "autogen_core.tools.FunctionTool",
+                  "component_type": "tool",
+                  "version": 1,
+                  "component_version": 1,
+                  "description": "Writes the given markdown content to a specified file.\n\n    Parameters:\n    - markdown_content (str): The markdown content to write to the file.\n    - filename (str): The name of the file to write the content to.",
+                  "label": "FunctionTool",
+                  "config": {
+                    "source_code": "def write_markdown_to_file(markdown_content: str, filename: str) -> str:\n    try:\n        with open(filename, 'w', encoding='utf-8') as file:\n            file.write(markdown_content)\n        return(f\"Markdown content successfully written to {filename}\")\n    except Exception as e:\n        return(f\"An error occurred while writing to the file: {e}\")",
+                    "name": "write_markdown_to_file",
+                    "description": "Writes the given markdown content to a specified file.",
+                    "global_imports": [],
+                    "has_cancellation_support": false
+                  }
+                }
+              ],
+              "handoffs": [],
+              "model_context": {
+                "provider": "autogen_core.model_context.UnboundedChatCompletionContext",
+                "component_type": "chat_completion_context",
+                "version": 1,
+                "component_version": 1,
+                "description": "An unbounded chat completion context that keeps a view of the all the messages.",
+                "label": "UnboundedChatCompletionContext",
+                "config": {}
+              },
+              "description": "The assistant in charge of assessing the questions, the choices as well as assessing the results.",
+              "system_message": "You are the Dev_Assessor, an AI expert in evaluating and verifying the correctness of assessment questions. Your role is to ensure the accuracy of the answers provided for a developer hiring process. Upon receiving questions and choices from the Planning Assistant (excluding answers), you will: 1. Analyze each question and determine the correct answer based on your expertise. 2. Return the verified answers to the Planning Assistant. 3. If discrepancies are identified between your answers and those provided by the Dev_Writer, explain the reasoning behind your answer and provide the correct solution. Your expertise ensures the reliability and validity of the assessment questions used in the hiring process.",
+              "model_client_stream": false,
+              "reflect_on_tool_use": false,
+              "tool_call_summary_format": "{result}"
+            }
+          }
+        ],
+        "models": [
+          {
+            "provider": "autogen_ext.models.openai.OpenAIChatCompletionClient",
+            "component_type": "model",
+            "version": 1,
+            "component_version": 1,
+            "description": "Chat completion client for OpenAI hosted models.",
+            "label": "OpenAIChatCompletionClient",
+            "config": {
+              "model": "gpt-4o-mini"
+            }
+          }
+        ],
+        "tools": [
+          {
+            "provider": "autogen_core.tools.FunctionTool",
+            "component_type": "tool",
+            "version": 1,
+            "component_version": 1,
+            "description": "Writes the given markdown content to a specified file.\n\n    Parameters:\n    - markdown_content (str): The markdown content to write to the file.\n    - filename (str): The name of the file to write the content to.",
+            "label": "FunctionTool",
+            "config": {
+              "source_code": "def write_markdown_to_file(markdown_content: str, filename: str) -> str:\n    try:\n        with open(filename, 'w', encoding='utf-8') as file:\n            file.write(markdown_content)\n        return(f\"Markdown content successfully written to {filename}\")\n    except Exception as e:\n        return(f\"An error occurred while writing to the file: {e}\")",
+              "name": "write_markdown_to_file",
+              "description": "Writes the given markdown content to a specified file.",
+              "global_imports": [],
+              "has_cancellation_support": false
+            }
+          }
+        ],
+        "terminations": [
+          {
+            "provider": "autogen_agentchat.conditions.TextMentionTermination",
+            "component_type": "termination",
+            "version": 1,
+            "component_version": 1,
+            "description": "Terminate the conversation if a specific text is mentioned.",
+            "label": "TextMentionTermination",
+            "config": {
+              "text": "TERMINATE"
+            }
+          },
+          {
+            "provider": "autogen_agentchat.conditions.MaxMessageTermination",
+            "component_type": "termination",
+            "version": 1,
+            "component_version": 1,
+            "description": "Terminate the conversation after a maximum number of messages have been exchanged.",
+            "label": "MaxMessageTermination",
+            "config": {
+              "max_messages": 10
+            }
+          }
+        ]
+      }
+    }
+  }

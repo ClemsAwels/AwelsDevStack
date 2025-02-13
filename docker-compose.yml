@@ -127,6 +127,7 @@ services:
         USE_CUDA: "false"
         USE_CUDA_VER: "cpu"
     container_name: pipelines
+    hostname: pipelines
     networks: ['demo']
     restart: always
     ports:
